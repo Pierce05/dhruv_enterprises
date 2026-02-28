@@ -1,0 +1,61 @@
+import * as React from "react";
+
+function Card({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card"
+      className={[
+        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      {...props}
+    />
+  );
+}
+
+function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-header"
+      className={[
+        "grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      {...props}
+    />
+  );
+}
+
+function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-title"
+      className={["leading-none font-semibold", className].filter(Boolean).join(" ")}
+      {...props}
+    />
+  );
+}
+
+function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-description"
+      className={["text-muted-foreground text-sm", className].filter(Boolean).join(" ")}
+      {...props}
+    />
+  );
+}
+
+function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+  return <div data-slot="card-content" className={["px-6", className].filter(Boolean).join(" ")} {...props} />;
+}
+
+function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
+  return <div data-slot="card-footer" className={["flex items-center px-6", className].filter(Boolean).join(" ")} {...props} />;
+}
+
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent };
