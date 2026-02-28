@@ -14,7 +14,7 @@ export type Product = {
   category: string;
   name: string;
   description: string;
-  imagePlaceholder: string;
+  image: string;
   specifications: ProductSpecification[];
 };
 
@@ -43,7 +43,7 @@ export const products: Product[] = [
     name: "GK26-1A Bag Closing Machine",
     description:
       "A compact, high-speed industrial stitching machine for woven and jute bag closing.",
-    imagePlaceholder: "GK26-1A product image placeholder",
+    image: "/images/gk26-1a.jpg",
     specifications: [
       { label: "Speed", value: "1800 stitches/min" },
       { label: "Motor Power", value: "90W" },
@@ -58,7 +58,7 @@ export const products: Product[] = [
     name: "NP-7A Bag Stitching Machine",
     description:
       "Portable continuous-duty closer for fertilizer, feed, and grain bags.",
-    imagePlaceholder: "NP-7A product image placeholder",
+    image: "/images/np-7a.jpg",
     specifications: [
       { label: "Speed", value: "1250 stitches/min" },
       { label: "Motor Power", value: "170W" },
@@ -73,7 +73,7 @@ export const products: Product[] = [
     name: "FFS-500 Form Fill Seal Machine",
     description:
       "Automatic packaging machine designed for high-volume pouch production lines.",
-    imagePlaceholder: "FFS-500 product image placeholder",
+    image: "/images/ffs-500.jpg",
     specifications: [
       { label: "Speed", value: "30-60 packs/min" },
       { label: "Power", value: "2.5kW" },
@@ -88,7 +88,7 @@ export const products: Product[] = [
     name: "BS-900 Band Sealer",
     description:
       "Continuous sealing machine for reliable pouch sealing in medium-scale operations.",
-    imagePlaceholder: "BS-900 product image placeholder",
+    image: "/images/bs-900.jpg",
     specifications: [
       { label: "Sealing Speed", value: "0-12 m/min" },
       { label: "Power", value: "500W" },
@@ -103,7 +103,7 @@ export const products: Product[] = [
     name: "Polyester High-Strength Thread",
     description:
       "Industrial stitching thread optimized for high tensile strength and durability.",
-    imagePlaceholder: "Polyester high-strength thread image placeholder",
+    image: "/images/polyester-hs.jpg",
     specifications: [
       { label: "Thread Type", value: "100% Polyester" },
       { label: "Ticket", value: "20/6" },
@@ -118,7 +118,7 @@ export const products: Product[] = [
     name: "Weather Guard Industrial Thread",
     description:
       "UV-resistant thread for export bags and outdoor storage applications.",
-    imagePlaceholder: "Weather Guard thread image placeholder",
+    image: "/images/weather-guard.jpg",
     specifications: [
       { label: "Thread Type", value: "UV-resistant synthetic" },
       { label: "Ticket", value: "30/4" },

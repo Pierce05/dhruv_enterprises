@@ -1,21 +1,28 @@
 import Link from "next/link";
 import { categories } from "@/app/lib/products";
+import { EnquiryForm } from "@/components/EnquiryForm";
+import { IndustriesSection } from "@/components/IndustriesSection";
+import { TrustedCompanies } from "@/components/TrustedCompanies";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ product?: string }>;
+}) {
   const featuredCategories = categories.slice(0, 3);
+  const { product } = await searchParams;
 
   return (
     <main className="min-h-screen bg-green-50">
       {/* Hero Section */}
-      <section className="bg-green-800 px-6 py-16 sm:px-8 md:py-24 lg:px-10">
+      <section className="bg-gradient-to-r from-green-900 via-green-800 to-green-700 px-6 py-16 sm:px-8 md:py-24 lg:px-10">
         <div className="mx-auto grid w-full max-w-[1200px] items-center gap-10 lg:grid-cols-2">
           <div className="text-center text-white lg:text-left">
             <h1 className="mb-5 text-4xl font-extrabold leading-tight md:text-6xl">
@@ -27,7 +34,7 @@ export default function Home() {
             <div className="flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
               <Link
                 href="/products"
-                className="rounded-lg bg-white px-6 py-3 font-semibold text-green-900 transition hover:bg-green-100"
+                className="rounded-lg bg-gradient-to-r from-green-700 to-green-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:from-green-800 hover:to-green-700"
               >
                 View Products
               </Link>
@@ -35,7 +42,7 @@ export default function Home() {
                 href="https://wa.me/917988525983"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-lg border border-green-200 px-6 py-3 font-semibold text-white transition hover:bg-green-700"
+                className="rounded-lg border border-green-200 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-green-800/40"
               >
                 Request Quote
               </Link>
@@ -58,7 +65,7 @@ export default function Home() {
             {featuredCategories.map((category) => (
               <Card
                 key={category.title}
-                className="h-full border-green-100 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+                className="h-full border-green-100 bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
                 <CardHeader>
                   <CardTitle className="text-xl text-green-900">
@@ -66,11 +73,10 @@ export default function Home() {
                   </CardTitle>
                   <CardDescription>{category.description}</CardDescription>
                 </CardHeader>
-                <CardContent />
                 <CardFooter>
                   <Link
                     href={`/products/${category.slug}`}
-                    className="rounded-md bg-green-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-700"
+                    className="rounded-md bg-gradient-to-r from-green-700 to-green-600 px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:from-green-800 hover:to-green-700"
                   >
                     View Products
                   </Link>
@@ -80,6 +86,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <TrustedCompanies />
+      <IndustriesSection />
+      <EnquiryForm defaultProduct={product} />
     </main>
   );
 }

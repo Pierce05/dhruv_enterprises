@@ -36,7 +36,7 @@ export default async function ProductCategoryPage({
               href={`/products/${category}/${machine.slug}`}
               className="block"
             >
-              <Card className="h-full border-green-100 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <Card className="h-full border-green-100 bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                 <CardHeader>
                   <CardTitle className="text-xl text-green-900">
                     {machine.name}
@@ -46,7 +46,7 @@ export default async function ProductCategoryPage({
                   <p className="text-sm text-slate-600">{machine.description}</p>
                 </CardContent>
                 <CardFooter>
-                  <span className="rounded-md bg-green-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-700">
+                  <span className="rounded-md bg-gradient-to-r from-green-700 to-green-600 px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:from-green-800 hover:to-green-700">
                     View Product
                   </span>
                 </CardFooter>

@@ -1,6 +1,7 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductBySlugs } from "@/app/lib/products";
+import { ProductImage } from "@/components/ProductImage";
+import { ProductQuoteActions } from "@/components/ProductQuoteActions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function ProductPage({
@@ -18,7 +19,7 @@ export default async function ProductPage({
   return (
     <main className="min-h-screen bg-green-50 px-6 py-16 sm:px-8 lg:px-10">
       <section className="mx-auto grid w-full max-w-[1200px] gap-8 lg:grid-cols-2">
-        <Card className="border-green-100 bg-white">
+        <Card className="border-green-100 bg-white shadow-md">
           <CardHeader>
             <CardTitle className="text-3xl font-extrabold text-green-900">
               {productData.name}
@@ -28,14 +29,11 @@ export default async function ProductPage({
             <p className="text-base leading-7 text-slate-700">
               {productData.description}
             </p>
-
-            <div className="flex h-72 items-center justify-center rounded-lg border-2 border-dashed border-slate-300 bg-green-50 text-sm font-medium text-slate-500">
-              {productData.imagePlaceholder}
-            </div>
+            <ProductImage src={productData.image} alt={productData.name} />
           </CardContent>
         </Card>
 
-        <Card className="border-green-100 bg-white">
+        <Card className="border-green-100 bg-white shadow-md">
           <CardHeader>
             <CardTitle className="text-2xl font-bold text-green-900">
               Specifications
@@ -58,15 +56,7 @@ export default async function ProductPage({
                 </tbody>
               </table>
             </div>
-
-            <Link
-              href="https://wa.me/917988525983"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex w-full items-center justify-center rounded-lg bg-green-800 px-6 py-3 text-sm font-semibold text-white transition hover:bg-green-700"
-            >
-              Request Quote
-            </Link>
+            <ProductQuoteActions productSlug={productData.slug} />
           </CardContent>
         </Card>
       </section>
