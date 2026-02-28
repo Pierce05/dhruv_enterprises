@@ -23,7 +23,7 @@ export default function ProductDetailPage() {
             </p>
 
             <div className="flex h-72 items-center justify-center rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 text-sm font-medium text-slate-500">
-              Product Image
+              Product Image.
             </div>
           </CardContent>
         </Card>
