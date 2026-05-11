@@ -1,94 +1,66 @@
 import Link from "next/link";
-import { categories } from "@/app/lib/products";
-import { EnquiryForm } from "@/components/EnquiryForm";
-import { IndustriesSection } from "@/components/IndustriesSection";
-import { TrustedCompanies } from "@/components/TrustedCompanies";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { companies } from "@/app/lib/products";
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: Promise<{ product?: string }>;
-}) {
-  const featuredCategories = categories.slice(0, 3);
-  const { product } = await searchParams;
-
+export default function Home() {
   return (
-    <main className="min-h-screen bg-green-50">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-900 via-green-800 to-green-700 px-6 py-16 sm:px-8 md:py-24 lg:px-10">
-        <div className="mx-auto grid w-full max-w-[1200px] items-center gap-10 lg:grid-cols-2">
-          <div className="text-center text-white lg:text-left">
-            <h1 className="mb-5 text-4xl font-extrabold leading-tight md:text-6xl">
-              Industrial Packaging and Bag Closing Solutions
-            </h1>
-            <p className="mb-8 max-w-2xl text-lg text-green-100 md:text-xl">
-              Trusted machines and support for packaging businesses across India.
-            </p>
-            <div className="flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
-              <Link
-                href="/products"
-                className="rounded-lg bg-gradient-to-r from-green-700 to-green-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:from-green-800 hover:to-green-700"
-              >
-                View Products
-              </Link>
-              <Link
-                href="https://wa.me/917988525983"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-lg border border-green-200 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-green-800/40"
-              >
-                Request Quote
-              </Link>
-            </div>
-          </div>
+    <main className="px-6 py-10 sm:px-8 lg:px-10">
+      <section className="mx-auto max-w-[1280px] rounded-[2.5rem] border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))] p-8 shadow-2xl shadow-black/25 md:p-12">
+        <div className="max-w-4xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/70">
+            Company Selection
+          </p>
+          <h1 className="mt-4 text-4xl font-semibold leading-tight text-white md:text-6xl">
+            Choose the business path before the buyer enters the catalog.
+          </h1>
+          <p className="mt-5 max-w-3xl text-base leading-8 text-slate-300 md:text-lg">
+            This first screen separates Dhruv Enterprises and Shree Shyam Enterprises, then routes the visitor
+            into company-specific messaging, category pages, product details, and enquiry actions for retail,
+            wholesale, and servicing.
+          </p>
+        </div>
 
-          <div className="flex h-72 items-center justify-center rounded-2xl border border-green-700/40 bg-green-700/40 text-base font-semibold text-green-50 md:h-96">
-            Industrial Machine Image Placeholder
-          </div>
+        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          {companies.map((company, index) => (
+            <article
+              key={company.slug}
+              className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#12161d] p-7"
+            >
+              <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-amber-500/10 blur-3xl" />
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-amber-200/70">
+                {index === 0 ? "Retail + Spares + Service" : "Wholesale + Systems + Service"}
+              </p>
+              <h2 className="mt-4 text-3xl font-semibold text-white">
+                {company.shortName}
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-slate-300">{company.overview}</p>
+
+              <div className="mt-6 space-y-3">
+                {company.trustPoints.map((point) => (
+                  <div key={point} className="flex gap-3 text-sm text-slate-200">
+                    <span className="mt-2 h-2 w-2 rounded-full bg-amber-400" />
+                    <span>{point}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  href={`/${company.slug}`}
+                  className="rounded-full bg-amber-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-400"
+                >
+                  Enter {company.shortName}
+                </Link>
+                <Link
+                  href={`/contact?company=${company.slug}&intent=request-quote`}
+                  className="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                >
+                  Start Enquiry
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
-
-      {/* Categories */}
-      <section className="px-6 py-16 sm:px-8 md:py-20 lg:px-10">
-        <div className="mx-auto w-full max-w-[1200px]">
-          <h2 className="mb-12 text-center text-3xl font-bold text-green-900 md:text-4xl">
-            Our Product Categories
-          </h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {featuredCategories.map((category) => (
-              <Card
-                key={category.title}
-                className="h-full border-green-100 bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-              >
-                <CardHeader>
-                  <CardTitle className="text-xl text-green-900">
-                    {category.title}
-                  </CardTitle>
-                  <CardDescription>{category.description}</CardDescription>
-                </CardHeader>
-                <CardFooter>
-                  <Link
-                    href={`/products/${category.slug}`}
-                    className="rounded-md bg-gradient-to-r from-green-700 to-green-600 px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:from-green-800 hover:to-green-700"
-                  >
-                    View Products
-                  </Link>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-      <TrustedCompanies />
-      <IndustriesSection />
-      <EnquiryForm defaultProduct={product} />
     </main>
   );
 }

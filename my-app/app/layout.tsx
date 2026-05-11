@@ -16,8 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dhruv Enterprises",
-  description: "Industrial packaging and bag closing machine supplier",
+  title: "Dhruv Enterprises | Shree Shyam Enterprises",
+  description:
+    "Industrial catalog platform for retail, wholesale, and servicing enquiries across packaging and bag closing products.",
 };
 
 export default function RootLayout({
@@ -32,77 +33,68 @@ export default function RootLayout({
       >
         <SiteNavbar />
         {children}
-        <footer className="bg-green-900 text-white">
-          <div className="mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-8 px-6 py-12 sm:px-8 md:grid-cols-4 lg:px-10">
+        <footer className="border-t border-white/10 bg-black/40">
+          <div className="mx-auto grid w-full max-w-[1280px] gap-8 px-6 py-12 sm:px-8 md:grid-cols-4 lg:px-10">
             <div>
-              <h3 className="mb-3 text-lg font-bold">Dhruv Enterprises</h3>
-              <p className="text-sm text-green-100">
-                Industrial packaging and bag closing solutions for manufacturing
-                businesses across India.
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-200/70">
+                Phase 1 Direction
+              </p>
+              <h3 className="mt-3 text-lg font-semibold text-white">
+                Two-brand industrial catalog
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-slate-300">
+                Structured around company selection, catalog browsing, quote capture, and product approval workflow scaffolding.
               </p>
             </div>
             <div>
-              <h4 className="mb-3 text-base font-semibold">Quick Links</h4>
-              <ul className="space-y-2 text-sm text-green-100">
+              <h4 className="mb-3 text-base font-semibold text-white">Company Pages</h4>
+              <ul className="space-y-2 text-sm text-slate-300">
                 <li>
-                  <Link href="/" className="hover:text-white">
-                    Home
+                  <Link href="/dhruv" className="hover:text-white">
+                    Dhruv Enterprises
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/shree-shyam" className="hover:text-white">
+                    Shree Shyam Enterprises
                   </Link>
                 </li>
                 <li>
                   <Link href="/products" className="hover:text-white">
-                    Products
+                    Combined Catalog View
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="mb-3 text-base font-semibold text-white">CMS Scaffolding</h4>
+              <ul className="space-y-2 text-sm text-slate-300">
+                <li>
+                  <Link href="/portal/submit-product" className="hover:text-white">
+                    Worker Submission Form
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" className="hover:text-white">
-                    About
+                  <Link href="/portal/review-queue" className="hover:text-white">
+                    Manager Review Queue
                   </Link>
                 </li>
                 <li>
                   <Link href="/contact" className="hover:text-white">
-                    Contact
+                    Enquiry Hub
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="mb-3 text-base font-semibold">Product Categories</h4>
-              <ul className="space-y-2 text-sm text-green-100">
-                <li>
-                  <Link
-                    href="/products/bag-closing-machines"
-                    className="hover:text-white"
-                  >
-                    Bag Closing Machines
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/products/packaging-machines"
-                    className="hover:text-white"
-                  >
-                    Packaging Machines
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/products/sewing-threads" className="hover:text-white">
-                    Sewing Threads
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-3 text-base font-semibold">Contact Information</h4>
-              <ul className="space-y-2 text-sm text-green-100">
-                <li>Phone: +91 79885 25983</li>
-                <li>Email: sales@dhruventerprises.com</li>
-                <li>Address: Industrial Area, New Delhi, India</li>
-              </ul>
+              <h4 className="mb-3 text-base font-semibold text-white">Build Notes</h4>
+              <p className="text-sm leading-6 text-slate-300">
+                Recommended production path remains Next.js plus PostgreSQL, image uploads, and admin workflow pages, with later migration to a heavier CMS only if the catalog team outgrows custom pages.
+              </p>
             </div>
           </div>
-          <div className="border-t border-green-800 px-6 py-4 text-center text-sm text-green-100">
-            © 2026 Dhruv Enterprises. All rights reserved.
+          <div className="border-t border-white/10 px-6 py-4 text-center text-sm text-slate-400">
+            © 2026 Dhruv Enterprises and Shree Shyam Enterprises. All rights reserved.
           </div>
         </footer>
         <WhatsAppFloat />

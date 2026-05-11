@@ -7,21 +7,14 @@ type EnquiryPayload = {
   email?: string;
   company?: string;
   product?: string;
+  intent?: string;
   message?: string;
 };
 
 export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY;
-
-  if (!apiKey) {
-    return NextResponse.json(
-      { error: "Email service is not configured." },
-      { status: 500 },
-    );
-  }
-
   const body = (await request.json()) as EnquiryPayload;
-  const { name, phone, email, company, product, message } = body;
+  const { name, phone, email, company, product, intent, message } = body;
 
   if (!name || !phone || !email) {
     return NextResponse.json(
@@ -30,25 +23,34 @@ export async function POST(request: Request) {
     );
   }
 
-  const resend = new Resend(apiKey);
-
   const emailBody = `
 New Website Enquiry
 
 Name: ${name}
 Phone: ${phone}
 Email: ${email}
-Company: ${company || "Not provided"}
+Selected Business: ${company || "Not provided"}
 Product: ${product || "Not selected"}
+Intent: ${intent || "General enquiry"}
 Message: ${message || "Not provided"}
 `;
+
+  if (!apiKey) {
+    return NextResponse.json({
+      ok: true,
+      mode: "mock",
+      preview: emailBody.trim(),
+    });
+  }
+
+  const resend = new Resend(apiKey);
 
   try {
     await resend.emails.send({
       from: "Dhruv Enterprises <onboarding@resend.dev>",
       to: ["sales@dhruventerprises.com"],
       replyTo: email,
-      subject: "New Website Enquiry",
+      subject: `New Website Enquiry - ${intent || "general"}`,
       text: emailBody.trim(),
     });
 

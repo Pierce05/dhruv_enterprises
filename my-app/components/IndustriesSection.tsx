@@ -1,54 +1,38 @@
-const industries = [
-  {
-    title: "Food Packaging",
-    description: "Bag stitching and sealing solutions for food-grade packaging.",
-  },
-  {
-    title: "Fertilizer",
-    description: "Reliable machines for high-volume fertilizer bag closing lines.",
-  },
-  {
-    title: "Cement",
-    description: "Durable industrial systems for cement and construction sacks.",
-  },
-  {
-    title: "Animal Feed",
-    description: "Fast and consistent closing machines for feed manufacturing.",
-  },
-  {
-    title: "Chemical Packaging",
-    description: "Secure sealing and packaging support for chemical products.",
-  },
-  {
-    title: "Agriculture",
-    description: "Packaging equipment for seeds, grains, and agro products.",
-  },
-];
+type IndustriesSectionProps = {
+  industries: string[];
+};
 
-export function IndustriesSection() {
+export function IndustriesSection({ industries }: IndustriesSectionProps) {
   return (
-    <section className="bg-green-50 px-6 py-16 sm:px-8 lg:px-10">
-      <div className="mx-auto w-full max-w-[1200px]">
-        <h2 className="mb-10 text-center text-3xl font-bold text-green-900 md:text-4xl">
-          Industries We Serve
+    <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+      <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 md:p-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-200/70">
+          Service Reach
+        </p>
+        <h2 className="mt-3 text-3xl font-semibold text-white">
+          Messaging centered on retail, wholesale, and servicing
         </h2>
+        <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300">
+          Instead of generic brochure blocks, each company page now frames the business model clearly:
+          product supply for immediate needs, wholesale support for repeat buying, and service support to keep production lines moving.
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-          {industries.map((industry) => (
-            <article
-              key={industry.title}
-              className="rounded-lg bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-            >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-green-100 text-xs font-semibold text-green-800">
-                Icon
-              </div>
-              <h3 className="mb-2 text-xl font-semibold text-green-900">
-                {industry.title}
-              </h3>
-              <p className="text-sm text-slate-600">{industry.description}</p>
-            </article>
-          ))}
-        </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        {industries.map((industry) => (
+          <article
+            key={industry}
+            className="rounded-[1.75rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))] p-5"
+          >
+            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-amber-400/15 text-xs font-bold uppercase tracking-[0.2em] text-amber-100">
+              Ops
+            </div>
+            <h3 className="text-lg font-semibold text-white">{industry}</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-300">
+              Packaging and bag-closing support positioned for procurement, uptime, and field servicing needs in this segment.
+            </p>
+          </article>
+        ))}
       </div>
     </section>
   );

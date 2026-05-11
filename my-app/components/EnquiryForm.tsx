@@ -1,10 +1,12 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
-import { products } from "@/app/lib/products";
+import { companies, products } from "@/app/lib/products";
 
 type EnquiryFormProps = {
+  defaultCompany?: string;
   defaultProduct?: string;
+  defaultIntent?: string;
 };
 
 type FormState = {
@@ -13,6 +15,7 @@ type FormState = {
   email: string;
   company: string;
   product: string;
+  intent: string;
   message: string;
 };
 
@@ -22,20 +25,31 @@ const initialState: FormState = {
   email: "",
   company: "",
   product: "",
+  intent: "request-quote",
   message: "",
 };
 
-export function EnquiryForm({ defaultProduct = "" }: EnquiryFormProps) {
+export function EnquiryForm({
+  defaultCompany = "",
+  defaultProduct = "",
+  defaultIntent = "request-quote",
+}: EnquiryFormProps) {
   const [formData, setFormData] = useState<FormState>({
     ...initialState,
+    company: defaultCompany,
     product: defaultProduct,
+    intent: defaultIntent,
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle",
   );
 
   const productOptions = useMemo(
-    () => products.map((product) => ({ value: product.slug, label: product.name })),
+    () =>
+      products.map((product) => ({
+        value: product.slug,
+        label: `${product.name} (${product.sku})`,
+      })),
     [],
   );
 
@@ -55,138 +69,200 @@ export function EnquiryForm({ defaultProduct = "" }: EnquiryFormProps) {
       }
 
       setStatus("success");
-      setFormData((prev) => ({ ...initialState, product: prev.product }));
+      setFormData((prev) => ({
+        ...initialState,
+        company: prev.company,
+        product: prev.product,
+        intent: prev.intent,
+      }));
     } catch {
       setStatus("error");
     }
   }
 
   return (
-    <section id="enquiry" className="bg-green-50 px-6 py-16 sm:px-8 lg:px-10">
-      <div className="mx-auto w-full max-w-[1200px]">
-        <h2 className="mb-8 text-center text-3xl font-bold text-green-900 md:text-4xl">
-          Enquire With Us
+    <section
+      id="enquiry"
+      className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/20 md:p-8"
+    >
+      <div className="mb-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-200/70">
+          Enquiry Flow
+        </p>
+        <h2 className="mt-3 text-3xl font-semibold text-white md:text-4xl">
+          Capture direct buying, wholesale, and servicing leads
         </h2>
-
-        <form
-          onSubmit={handleSubmit}
-          className="mx-auto w-full max-w-4xl space-y-5 rounded-xl border border-slate-200 bg-white p-6 shadow-md md:p-8"
-        >
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            <div className="space-y-1.5">
-              <label htmlFor="name" className="text-sm font-medium text-slate-700">
-                Name
-              </label>
-              <input
-                id="name"
-                required
-                value={formData.name}
-                onChange={(event) =>
-                  setFormData((prev) => ({ ...prev, name: event.target.value }))
-                }
-                className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-green-700"
-              />
-            </div>
-            <div className="space-y-1.5">
-              <label htmlFor="phone" className="text-sm font-medium text-slate-700">
-                Phone Number
-              </label>
-              <input
-                id="phone"
-                required
-                value={formData.phone}
-                onChange={(event) =>
-                  setFormData((prev) => ({ ...prev, phone: event.target.value }))
-                }
-                className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-green-700"
-              />
-            </div>
-            <div className="space-y-1.5">
-              <label htmlFor="email" className="text-sm font-medium text-slate-700">
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                required
-                value={formData.email}
-                onChange={(event) =>
-                  setFormData((prev) => ({ ...prev, email: event.target.value }))
-                }
-                className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-green-700"
-              />
-            </div>
-            <div className="space-y-1.5">
-              <label htmlFor="company" className="text-sm font-medium text-slate-700">
-                Company Name
-              </label>
-              <input
-                id="company"
-                value={formData.company}
-                onChange={(event) =>
-                  setFormData((prev) => ({ ...prev, company: event.target.value }))
-                }
-                className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-green-700"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-1.5">
-            <label htmlFor="product" className="text-sm font-medium text-slate-700">
-              Product Interested In
-            </label>
-            <select
-              id="product"
-              value={formData.product}
-              onChange={(event) =>
-                setFormData((prev) => ({ ...prev, product: event.target.value }))
-              }
-              className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-green-700"
-            >
-              <option value="">Select a product (optional)</option>
-              {productOptions.map((product) => (
-                <option key={product.value} value={product.value}>
-                  {product.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="space-y-1.5">
-            <label htmlFor="message" className="text-sm font-medium text-slate-700">
-              Message
-            </label>
-            <textarea
-              id="message"
-              rows={4}
-              value={formData.message}
-              onChange={(event) =>
-                setFormData((prev) => ({ ...prev, message: event.target.value }))
-              }
-              className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-green-700"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={status === "loading"}
-            className="inline-flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-green-700 to-green-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:from-green-800 hover:to-green-700 disabled:opacity-70"
-          >
-            {status === "loading" ? "Sending..." : "Send Enquiry"}
-          </button>
-
-          {status === "success" ? (
-            <p className="text-sm font-medium text-green-700">
-              Enquiry sent successfully. Our team will contact you soon.
-            </p>
-          ) : null}
-          {status === "error" ? (
-            <p className="text-sm font-medium text-red-600">
-              Failed to send enquiry. Please try again.
-            </p>
-          ) : null}
-        </form>
+        <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300">
+          This form is already shaped for the Phase 1 workflow: company selection, product context,
+          intent capture, and structured lead data that can feed email, WhatsApp follow-up, and later CRM automation.
+        </p>
       </div>
+
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div className="grid gap-5 md:grid-cols-2">
+          <Field
+            id="name"
+            label="Name"
+            value={formData.name}
+            onChange={(value) => setFormData((prev) => ({ ...prev, name: value }))}
+            required
+          />
+          <Field
+            id="phone"
+            label="Phone Number"
+            value={formData.phone}
+            onChange={(value) => setFormData((prev) => ({ ...prev, phone: value }))}
+            required
+          />
+          <Field
+            id="email"
+            label="Email"
+            value={formData.email}
+            onChange={(value) => setFormData((prev) => ({ ...prev, email: value }))}
+            required
+            type="email"
+          />
+          <Field
+            id="companyName"
+            label="Company Name"
+            value={formData.company}
+            onChange={(value) => setFormData((prev) => ({ ...prev, company: value }))}
+          />
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-3">
+          <SelectField
+            id="brand"
+            label="Select Business"
+            value={formData.company}
+            onChange={(value) => setFormData((prev) => ({ ...prev, company: value }))}
+            options={companies.map((company) => ({
+              value: company.slug,
+              label: company.shortName,
+            }))}
+          />
+          <SelectField
+            id="intent"
+            label="Intent"
+            value={formData.intent}
+            onChange={(value) => setFormData((prev) => ({ ...prev, intent: value }))}
+            options={[
+              { value: "request-quote", label: "Request Quote" },
+              { value: "add-to-cart", label: "Add to Cart Enquiry" },
+              { value: "wholesale", label: "Wholesale Requirement" },
+              { value: "service-support", label: "Service Support" },
+            ]}
+          />
+          <SelectField
+            id="product"
+            label="Product"
+            value={formData.product}
+            onChange={(value) => setFormData((prev) => ({ ...prev, product: value }))}
+            options={productOptions}
+            placeholder="Select product"
+          />
+        </div>
+
+        <div className="space-y-1.5">
+          <label htmlFor="message" className="text-sm font-medium text-slate-200">
+            Message
+          </label>
+          <textarea
+            id="message"
+            rows={5}
+            value={formData.message}
+            onChange={(event) =>
+              setFormData((prev) => ({ ...prev, message: event.target.value }))
+            }
+            className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none transition focus:border-amber-400/50"
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="inline-flex w-full items-center justify-center rounded-full bg-amber-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-amber-400 disabled:opacity-70"
+        >
+          {status === "loading" ? "Sending..." : "Send Enquiry"}
+        </button>
+
+        {status === "success" ? (
+          <p className="text-sm font-medium text-emerald-300">
+            Enquiry captured successfully. The next step can be auto-reply email plus WhatsApp handoff.
+          </p>
+        ) : null}
+        {status === "error" ? (
+          <p className="text-sm font-medium text-rose-300">
+            Failed to send enquiry. Check the email configuration or retry the request.
+          </p>
+        ) : null}
+      </form>
     </section>
+  );
+}
+
+type FieldProps = {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  required?: boolean;
+  type?: string;
+};
+
+function Field({ id, label, value, onChange, required, type = "text" }: FieldProps) {
+  return (
+    <div className="space-y-1.5">
+      <label htmlFor={id} className="text-sm font-medium text-slate-200">
+        {label}
+      </label>
+      <input
+        id={id}
+        type={type}
+        required={required}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none transition focus:border-amber-400/50"
+      />
+    </div>
+  );
+}
+
+type SelectFieldProps = {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: { value: string; label: string }[];
+  placeholder?: string;
+};
+
+function SelectField({
+  id,
+  label,
+  value,
+  onChange,
+  options,
+  placeholder = "Select option",
+}: SelectFieldProps) {
+  return (
+    <div className="space-y-1.5">
+      <label htmlFor={id} className="text-sm font-medium text-slate-200">
+        {label}
+      </label>
+      <select
+        id={id}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none transition focus:border-amber-400/50"
+      >
+        <option value="">{placeholder}</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }
